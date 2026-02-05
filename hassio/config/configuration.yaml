@@ -1,0 +1,364 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+  - 172.16.238.1
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.mqtt: info
+
+evohome:
+  username: !secret evohome_user
+  password: !secret evohome_password
+
+# spotify:
+#   client_id: !secret spotify_client_id
+#   client_secret: !secret spotify_client_secret
+
+sensor:
+  # - platform: github
+  #   access_token: !secret github
+  #   repositories:
+  #     - path: 'PeterLietaer/home_assistant'
+  - platform: statistics
+    name: "delta_voc"
+    entity_id: sensor.0x0015bc00360017a3_voc
+    state_characteristic: change
+    max_age:
+      minutes: 5
+  - platform: statistics
+    name: "delta_hum"
+    entity_id: sensor.0x0015bc00360017a3_humidity
+    state_characteristic: change
+    max_age:
+      minutes: 5
+  - platform: template
+    sensors:
+      dvoc:
+        value_template: "{{ (states('sensor.delta_voc') | float / states('sensor.0x0015bc00360017a3_voc') | float * 100) | round(1, default=0) }}"
+
+sonoff:
+  devices:
+    1000d30ac0:
+      device_class: light
+      name: S26_toilet
+
+timer:
+  wc_ventilator_timeout:
+    duration: "00:10:00"
+  motion_living:
+    duration: "00:10:00"
+  motion_keuken:
+    duration: "00:10:00"
+  motion_berging:
+    duration: "00:10:00"
+  motion_garage:
+    duration: "00:10:00"
+
+api:
+
+input_boolean:
+  wc_vent_autom:
+    name: Automatic
+    icon: mdi:fan-auto
+  wc_timer_lock:
+    name: Timer lock
+    icon: mdi:timer-lock
+
+mqtt:
+    binary_sensor:
+
+      - name: sensor_motion_berging
+        state_topic: 'thuis/gelijkvloers/berging/motion'
+        payload_on: '1'
+        payload_off: '0'
+
+      - name: sensor_motion_garage
+        state_topic: 'thuis/gelijkvloers/garage/motion'
+        payload_on: 1
+        payload_off: 0
+
+      - name: sensor_motion_keuken
+        state_topic: 'thuis/gelijkvloers/keuken/motion'
+        payload_on: 1
+        payload_off: 0
+
+      - name: sensor_motion_living
+        state_topic: 'thuis/gelijkvloers/living/motion'
+        payload_on: 1
+        payload_off: 0
+        #value_template: "{%if is_state(entity_id,\"1\")-%}ON{%-else-%}OFF{%-endif%}"
+
+      - name: sensor_toilet_beneden
+        state_topic: 'controllino/controllino2/outTopic/CONTROLLINO_0'
+        payload_on: 1
+        payload_off: 0
+
+      - name: sensor2_pendel_klein
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_03'
+        payload_on: 1
+        payload_off: 0
+
+      - name: sensor_keuken_centraal
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_04'
+        payload_on: 1
+        payload_off: 0
+
+      - name: sensor_keuken_pendel
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_05'
+        payload_on: 1
+        payload_off: 0
+
+      - name: sensor_keuken_onderkast
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_06'
+        payload_on: 1
+        payload_off: 0    
+
+      - name: sensor_woonk_delta1
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D0'
+        payload_on: 1
+        payload_off: 0    
+    
+      - name: sensor_woonk_delta2
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D1'
+        payload_on: 1
+        payload_off: 0    
+
+      - name: sensor_woonk_delta3
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D2'
+        payload_on: 1
+        payload_off: 0    
+
+      - name: sensor_woonk_staandelamp
+        state_topic: 'cmnd/sonoff3/power'
+        payload_on: 1
+        payload_off: 0    
+
+      - name: sensor_woonk_occhio
+        state_topic: 'cmnd/sonoff1/power'
+        payload_on: 1
+        payload_off: 0
+
+      - name: sensor_woonk_muurhalo
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D3'
+        payload_on: 1
+        payload_off: 0    
+
+      - name: sensor_kamer_mapa
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_08'
+        payload_on: 1
+        payload_off: 0   
+
+      - name: sensor_bureau_spiegel
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_09'
+        payload_on: 1
+        payload_off: 0 
+
+      - name: sensor_badkamer_ventilator
+        state_topic: 'cmnd/sonoff2/power'
+        payload_on: 1
+        payload_off: 0    
+
+      - name: sensor_vijver_pomp
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_01'
+        payload_on: 1
+        payload_off: 0 
+
+      - name: sensor_vijver_luchtpomp
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_00'
+        payload_on: 1
+        payload_off: 0 
+
+      - name: sensor_vijver_uv
+        state_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_02'
+        payload_on: 1
+        payload_off: 0 
+
+    light:
+      - name: "pendel_klein"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_03'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true
+
+      - name: "keuken_centraal"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_04'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true
+
+      - name: "keuken_pendel"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_05'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true
+
+      - name: "keuken_onderkast"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_06'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: false    
+
+      - name: "woonk_delta1"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D0'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true        
+
+      - name: "woonk_delta2"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D1'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true        
+
+      - name: "woonk_delta3"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D2'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true      
+
+      - name: "woonk_staandelamp"
+        command_topic: 'cmnd/sonoff3/power'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true  
+
+      - name: "woonk_occhio"
+        command_topic: 'cmnd/sonoff1/power'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true  
+
+      - name: "woonk_muurhalo"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_D3'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true      
+
+      - name: "kamer_mapa"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_08'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true          
+
+      - name: "bureau_spiegel"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_09'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true      
+
+      - name: "badkamer_ventilator"
+        command_topic: 'cmnd/sonoff2/power'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true
+
+      - name: "vijver_pomp"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_01'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true
+
+      - name: "vijver_luchtpomp"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_00'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true
+
+      - name: "vijver_uv"
+        command_topic: 'controllino/controllino1/inTopic/CONTROLLINO_RELAY_02'
+        qos: 2
+        payload_on: 1
+        payload_off: 0
+        retain: true
+
+schedule:
+  ventilatie_schedule:
+    name: "Ventialtie schedule"
+    monday:
+      - from: "06:50:00"
+        to: "12:30:00"
+    tuesday:
+      - from: "06:50:00"
+        to: "12:30:00"
+    wednesday:
+      - from: "06:50:00"
+        to: "12:30:00"
+    thursday:
+      - from: "06:50:00"
+        to: "12:30:00"
+    friday:
+      - from: "06:50:00"
+        to: "12:30:00"
+    saturday:
+      - from: "09:00:00"
+        to: "14:00:00"
+    sunday:
+      - from: "09:00:00"
+        to: "14:00:00"
+
+group:
+  living1:
+    name: Staande lampen
+    entities:
+      - light.wiz_bulb
+      - light.occhio
+      - light.woonk_staandelamp
+  living2:
+    name: Delta
+    entities:
+      - light.woonk_delta1
+      - light.woonk_delta2
+      - light.woonk_delta3
+  living3:
+    name: Muur uplighter
+    entities:
+      - light.woonk_muurhalo
+  keuken1:
+    name: keuken - basis
+    entities:
+      - light.keuken_centraal
+      - light.keuken_pendel
+  keuken2:
+    name: keuken - pendel klein
+    entities:
+      - light.pendel_klein
+  keuken3:
+    name: keuken - aanrecht
+    entities:
+      - light.keuken_onderkast
+  terras:
+    name: terras
+    entities:
+      - light.hue_welcome_outdoor_wall_1
+      - light.hue_welcome_outdoor_wall_2

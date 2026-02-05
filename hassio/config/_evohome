@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "evohome",
+  "data": {
+    "username": "peter.lietaer@gmail.com",
+    "refresh_token": "luQe_kmW_2Na3BbBm7ZKqbo9sqroUtsGoxLcNS877dhw9IPrScm28q0aOyKKNQ0qGhFgfCfJnsmxyRUJQHrGZwIIQBhUO4jdPUrGL2IZEtpdtDbNNkiEiFOCeqjugUDQTyrgyqdhIt1fQJEQXLlr0jk5iUDFj6NwOTADT-7H3okSpHATFmNHKc79ZsLnVaH-MC8l6JZr2AqIkz275GkvzpRHLhJTn_TarEd7UL1OTWnDmnacq-RSJCis78gaDLGp-6M1h2ww3hP8VDkFeZ-wPVBQRvvZjpffyij_gjSWKMU7ZLRvS7Jl75suvkV56jNetk59I3l8oC0KYHnSW2Lp4t18bg1CcWScArZnsj5S7HsE8IwIQVzI6EtIwh-OjK7C2k6XAADkCn1QPSaVSxm1zKMiyEDE3imYg0inMsIivpBaF__GK7qEAJaSoX88agDjteNjhTsqnBZXW9GKhnVPN0jS7vXQA3E3o8rIgl7rT7BtMp8BnacpY6CyBKikbKeyndE8s6KvJyzkRM7pBTWC7HAE1QtsYjgJInfiy4dkaAvQdUwcIHqIMtD6hB8ELgw0nF_ckg",
+    "access_token": "zUpUvQt7Tiu8fXNgnIcs1K9kzXAqw3eLPFL6jQjIx1MlRJDdyJCSaciExk84g5gxkJAvvON2fKwnFj1mxqoOIWzoD3NtsywmKhWdcjB5Pw_fk1WtJtpVN7nTf3XZzPAvJh83UxED7W8R8sRCKmFHzNxKJu00_FgQv6oylQJJf5ExqudGwJ3wXNXbg3Ey_xsCQ1U_15G_uwAAj9Mi4ZnH5DODNIGQvt4vDgBhKvuewIj7oSedwze3v77Qc06sTVKPRNei5rOlhbyFAbp1bxRugQV0vWuopovJpOvCWR5Usef0TtzXJ8rD0i15RzErC4Kt7GIe1E7UJAgOmL4xG3G9-tLr5GqIaA5sYbU0Ll1xcKqUJaukzPqY9K4q1cBmY4IRHSvPBiq6xmUY1c6ZW3hDAqec7cYr6uM7bTjUUKCz4E8jab0WF1GYbTSvwFrAt53OfgU44LUS0uaOdv4rcIVBlr9ns4DmvTKDYcG_-jlQOp2CLB11tIM_o2maFmimE98u6rXg7knmvxDSHAJyI-eEqGNbZGKJFJT5W0VsFtTGb6xlOASY",
+    "access_token_expires": "2022-11-13T22:06:23+01:00",
+    "user_data": {
+      "userInfo": {
+        "userID": 1017948
+      },
+      "sessionId": "8EF32669-0B34-4233-9D0C-2C723B370135"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+# Rename to evohome and add refresh_token / access_token values
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "evohome",
+  "data": {
+    "username": "peter.lietaer@gmail.com",
+    "refresh_token": "see bitwarden",
+    "access_token": "see bitwarden",
+    "access_token_expires": "2022-11-13T22:06:23+01:00",
+    "user_data": {
+      "userInfo": {
+        "userID": 1017948
+      },
+      "sessionId": "8EF32669-0B34-4233-9D0C-2C723B370135"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+appdaemon:
+  latitude: 50.7901
+  longitude: 3.1872
+  elevation: 18
+  time_zone: Europe/Brussels
+  plugins:
+    HASS:
+      type: hass
+      ha_url: $HA_URL
+      token: $HA_TOKEN
+      cert_verify: True
+http:
+  url: $DASH_URL
+api:
+hadashboard:

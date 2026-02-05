@@ -1,0 +1,25 @@
+{
+    "0x00158d0006f0fb30": {
+        "temperature": 23.53,
+        "humidity": 70.96,
+        "pressure": 1024,
+        "voltage": 2965,
+        "battery": 77,
+        "power_outage_count": 100
+    },
+    "0x0015bc00360017a3": {
+        "voc": 1269,
+        "air_quality": "moderate",
+        "temperature": 18.2,
+        "humidity": 57.5,
+        "voltage": 2700,
+        "battery": 40,
+        "battery_low": false,
+        "update": {
+            "state": "idle",
+            "installed_version": 262145,
+            "latest_version": 262145
+        },
+        "update_available": false
+    }
+}

@@ -1,0 +1,762 @@
+- id: '1642791517101'
+  alias: Garage poort open
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.0x00158d000792d80d_contact
+    to: 'on'
+    for:
+      hours: 2
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_mi_9t
+    data:
+      message: Garagepoort is niet vergrendeld of staat open
+      title: garagepoort
+  mode: single
+- id: '1642710054300'
+  alias: pendel_klein_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A0
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor2_pendel_klein
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.pendel_klein
+  mode: single
+- id: '1642710054301'
+  alias: pendel_klein_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A0
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor2_pendel_klein
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.pendel_klein
+  mode: single
+- id: '1642710054302'
+  alias: keuken_centraal_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A1
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_keuken_centraal
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.keuken_centraal
+  mode: single
+- id: '1642710054303'
+  alias: keuken_centraal_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A1
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_keuken_centraal
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.keuken_centraal
+  mode: single
+- id: '1642710054304'
+  alias: keuken_pendel_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A2
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_keuken_pendel
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.keuken_pendel
+  mode: single
+- id: '1642710054305'
+  alias: keuken_pendel_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A2
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_keuken_pendel
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.keuken_pendel
+  mode: single
+- id: '1642710054306'
+  alias: keuken_onderkast_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A3
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_keuken_onderkast
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.keuken_onderkast
+  mode: single
+- id: '1642710054307'
+  alias: keuken_onderkast_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A3
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_keuken_onderkast
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.keuken_onderkast
+  mode: single
+- id: '1642710054308'
+  alias: woonk_delta_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A5
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_delta1
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_delta2
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_delta3
+      state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.woonk_delta1
+  - service: light.turn_off
+    target:
+      entity_id: light.woonk_delta2
+  - service: light.turn_off
+    target:
+      entity_id: light.woonk_delta3
+- id: '1642710054309'
+  alias: woonk_delta_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A5
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_delta1
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_delta2
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_delta3
+      state: 'off'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.woonk_delta1
+  - service: light.turn_on
+    target:
+      entity_id: light.woonk_delta2
+  - service: light.turn_on
+    target:
+      entity_id: light.woonk_delta3
+- id: '1642710054310'
+  alias: woonk_staandelamp_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A4
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_woonk_staandelamp
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.woonk_staandelamp
+  mode: single
+- id: '1642710054311'
+  alias: woonk_staandelamp_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A4
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_staandelamp
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.woonk_staandelamp
+  mode: single
+- id: '1642710054312'
+  alias: woonk_muurhalo_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A7
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_woonk_muurhalo
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.woonk_muurhalo
+  mode: single
+- id: '1642710054313'
+  alias: woonk_muurhalo_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A7
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_muurhalo
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.woonk_muurhalo
+  mode: single
+- id: '1642710054314'
+  alias: kamer_mapa_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A8
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_kamer_mapa
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.kamer_mapa
+  mode: single
+- id: '1642710054315'
+  alias: kamer_mapa_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A8
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_kamer_mapa
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.kamer_mapa
+  mode: single
+- id: '1642710054316'
+  alias: bureau_spiegel_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A9
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_bureau_spiegel
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.bureau_spiegel
+  mode: single
+- id: '1642710054317'
+  alias: bureau_spiegel_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A9
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_bureau_spiegel
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.bureau_spiegel
+  mode: single
+- id: '1642710054318'
+  alias: badkamer_ventilator_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_IN0
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_badkamer_ventilator
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.badkamer_ventilator
+  mode: single
+- id: '1642710054319'
+  alias: badkamer_ventilator_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_IN0
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_badkamer_ventilator
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.badkamer_ventilator
+  mode: single
+- id: '1642791517120'
+  alias: Ventilator af na x min
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.sensor_badkamer_ventilator
+    to: 'on'
+    for:
+      hours: 4
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.badkamer_ventilator
+  mode: single
+- id: '1642791517121'
+  trigger:
+  - platform: state
+    entity_id: schedule.ventilatie_schedule
+    to: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.badkamer_ventilator
+  mode: single
+- id: '1642791517122'
+  trigger:
+  - platform: state
+    entity_id: schedule.ventilatie_schedule
+    to: 'off'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.badkamer_ventilator
+  mode: single
+- id: '1642791517123'
+  alias: vijver_pomp_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_RELAY_01
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_vijver_pomp
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.vijver_pomp
+  mode: single
+- id: '1642791517124'
+  alias: vijver_pomp_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_RELAY_01
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_vijver_pomp
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.vijver_pomp
+  mode: single
+- id: '1642791517125'
+  alias: vijver_luchtpomp_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_RELAY_00
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_vijver_luchtpomp
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.vijver_luchtpomp
+  mode: single
+- id: '1642791517126'
+  alias: vijver_luchtpomp_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_RELAY_00
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_vijver_luchtpomp
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.vijver_luchtpomp
+  mode: single
+- id: '1642791517127'
+  alias: vijver_uv_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_RELAY_02
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_vijver_uv
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.vijver_uv
+  mode: single
+- id: '1642791517128'
+  alias: vijver_uv_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_RELAY_02
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_vijver_uv
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.vijver_uv
+  mode: single
+- id: '1642791517129'
+  alias: t1_vijver_pomp_aan
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: -00:50:00
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_vijver_pomp
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.vijver_pomp
+  mode: single
+- id: '1642791517130'
+  alias: t1_vijver_pomp_uit
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:00:00
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_vijver_pomp
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.vijver_pomp
+  mode: single
+- id: '1642791517133'
+  alias: Backup Home Assistant every night at 3 AM
+  trigger:
+    platform: time
+    at: 03:00:00
+  action:
+    alias: Create backup now
+    service: backup.create
+  mode: single
+- id: '1642791517134'
+  alias: woonk_occhio_uit
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A6
+  condition:
+  - condition: state
+    entity_id: binary_sensor.sensor_woonk_occhio
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.woonk_occhio
+  mode: single
+- id: '1642791517135'
+  alias: woonk_occhio_aan
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: controllino/controllino1/outTopic/CONTROLLINO_A6
+  condition:
+    not:
+    - condition: state
+      entity_id: binary_sensor.sensor_woonk_occhio
+      state: 'on'
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.woonk_occhio
+  mode: single
+- id: '1642791517137'
+  alias: Toilet ventilator af na x min
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.sonoff_1000d30ac0
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.sonoff_1000d30ac0
+  - service: timer.start
+    target:
+      entity_id: timer.wc_ventilator_timeout
+  mode: single
+- id: '1642791517138'
+  alias: turn wc_timer_lock off
+  description: ''
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.wc_ventilator_timeout
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.wc_timer_lock
+  mode: single
+- id: '1642791517139'
+  alias: Toilet ventilator aan
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.dvoc
+    above: 15.0
+  condition:
+  - condition: state
+    entity_id: input_boolean.wc_timer_lock
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.wc_vent_autom
+    state: 'on'
+  - condition: numeric_state
+    entity_id: sensor.delta_hum
+    below: 5
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.sonoff_1000d30ac0
+  mode: single
+- id: '1672417129569'
+  alias: living motion
+  description: Beweging gedetecteerd in zone 'living'
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/living/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: timer.start
+    data:
+      duration: 00:10:00
+    target:
+      entity_id: timer.motion_living
+  mode: single
+- id: '1672417129570'
+  alias: keuken motion
+  description: Beweging gedetecteerd in zone 'keuken'
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/keuken/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: timer.start
+    data:
+      duration: 00:10:00
+    target:
+      entity_id: timer.motion_keuken
+  mode: single
+- id: '1672417129571'
+  alias: berging motion
+  description: Beweging gedetecteerd in zone 'berging'
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/berging/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: timer.start
+    data:
+      duration: 00:10:00
+    target:
+      entity_id: timer.motion_berging
+  mode: single
+- id: '1672417129572'
+  alias: garage motion
+  description: Beweging gedetecteerd in zone 'garage'
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/garage/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: timer.start
+    data:
+      duration: 00:10:00
+    target:
+      entity_id: timer.motion_garage
+  mode: single
+- id: '1672419214438'
+  alias: motion living
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/living/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: logbook.log
+    data:
+      message: 'living : motion detected'
+  mode: single
+- id: '1672419214439'
+  alias: motion keuken
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/keuken/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: logbook.log
+    data:
+      message: 'keuken : motion detected'
+  mode: single
+- id: '1672419214440'
+  alias: motion berging
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/berging/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: logbook.log
+    data:
+      message: 'berging : motion detected'
+  mode: single
+- id: '1672419214441'
+  alias: motion garage
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: thuis/gelijkvloers/garage/motion
+    payload: '1'
+  condition: []
+  action:
+  - service: logbook.log
+    data:
+      message: 'garage : motion detected'
+  mode: single
+- id: '1765485516938'
+  alias: timer_toilet_beneden_start
+  description: ''
+  triggers:
+  - trigger: mqtt
+    topic: controllino/controllino2/outTopic/CONTROLLINO_0
+  conditions:
+  - condition: state
+    entity_id: timer.timer_toilet_beneden
+    state:
+    - idle
+  actions:
+  - action: timer.start
+    metadata: {}
+    data:
+      duration: '180'
+    target:
+      entity_id: timer.timer_toilet_beneden
+  mode: single
+- id: '1765650168149'
+  alias: timer_toilet_beneden_stop
+  description: ''
+  triggers:
+  - trigger: mqtt
+    topic: controllino/controllino2/outTopic/CONTROLLINO_0
+  conditions:
+  - condition: state
+    entity_id: timer.timer_toilet_beneden
+    state:
+    - active
+  actions:
+  - action: timer.cancel
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.timer_toilet_beneden
+  mode: single

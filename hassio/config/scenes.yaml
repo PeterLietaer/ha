@@ -1,0 +1,57 @@
+- id: '1671181234931'
+  name: New Scene
+  entities:
+    light.hue_white_lamp_1:
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - brightness
+      mode: normal
+      dynamics: none
+      friendly_name: Hue white lamp 1
+      supported_features: 44
+      state: 'off'
+    light.hue_white_lamp_2:
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - brightness
+      mode: normal
+      dynamics: none
+      friendly_name: Hue white lamp 2
+      supported_features: 44
+      color_mode: brightness
+      brightness: 23
+      effect: None
+      state: 'on'
+    light.hue_white_lamp_3:
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - brightness
+      mode: normal
+      dynamics: none
+      friendly_name: Hue white lamp 3
+      supported_features: 44
+      color_mode: brightness
+      brightness: 23
+      effect: None
+      state: 'on'
+    light.hue_white_lamp_4:
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - brightness
+      mode: normal
+      dynamics: none
+      friendly_name: Hue white lamp 4
+      supported_features: 44
+      color_mode: brightness
+      brightness: 245
+      effect: None
+      state: 'on'
+  metadata: {}

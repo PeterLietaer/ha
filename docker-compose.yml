@@ -1,0 +1,105 @@
+version: '3.8'
+services:
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    hostname: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:1.42.0
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - ./zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      # Frontend port
+      - 8080:8080
+    environment:
+      - TZ=Europe/Brussels
+    devices:
+      # Make sure this matched your adapter location
+      - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/ttyACM0
+
+  homeassistant:
+    container_name: homeassistant
+    hostname: hass
+    image: ghcr.io/home-assistant/home-assistant:stable
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - ./hassio/config:/config
+    ports:
+      - 8123:8123
+    environment:
+      - TZ=Europe/Brussels
+    #network_mode: "host"
+
+  mosquitto:
+    container_name: mosquitto_mqtt
+    hostname: mosquitto
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883
+
+  nginx:
+    container_name: nginx
+    hostname: nginx
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - ./nginx/data/nginx:/etc/nginx/conf.d
+      - ./nginx/data/certbot/conf:/etc/letsencrypt
+      - ./nginx/data/certbot/www:/var/www/certbot
+      - ./nginx/logs/access.log:/var/log/nginx/access.log
+      - ./nginx/logs/error.log:/var/log/nginx/error.log
+      - ./nginx/client_certs:/etc/nginx/client_certs
+    ports:
+      - "80:80"
+      - "443:443"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    container_name: certbot
+    hostname: certbot
+    # image voor odroid
+    #image: certbot/certbot:arm32v6-latest
+    image: certbot/certbot:v2.3.0
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - ./nginx/data/certbot/conf:/etc/letsencrypt
+      - ./nginx/data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  appdaemon:
+    container_name: appdaemon
+    image: acockburn/appdaemon:latest
+    environment:
+      - HA_URL=${HA_URL}
+      - TOKEN=${TOKEN}
+      - DASH_URL=${DASH_URL}
+    ports:
+      - "5050:5050"
+    volumes:
+      - /home/peter/hass/appdaemon:/conf
+    restart: unless-stopped
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
+          gateway: 172.16.238.1
